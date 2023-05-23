@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/*
+*
+*
+*               APLICA REGRAS A INTERFACE CUSTOMERDAO
+*
+* */
 @Repository("jpa")
 public class CustomerJPADataAccessService implements CustomerDao {
 
