@@ -22,11 +22,11 @@ import java.util.Objects;
                 @UniqueConstraint(
                         name = "customer_email_unique",
                         columnNames = "email"
-                ),
+                )/*,
                 @UniqueConstraint(
                         name = "profile_image_id_unique",
                         columnNames = "profileImageId"
-                )
+                )*/
         }
 )
 public class Customer  implements  UserDetails{
@@ -93,8 +93,8 @@ public class Customer  implements  UserDetails{
                     String email,
                     String password,
                     Integer age,
-                    Gender gender/*,
-                    String profileImageId*/) {
+                    Gender gender,
+                    String profileImageId) {
         this(id, name, email, password, age, gender);
        // this.profileImageId = profileImageId;
     }
@@ -109,9 +109,6 @@ public class Customer  implements  UserDetails{
         this.password = password;
         this.age = age;
         this.gender = gender;
-    }
-
-    public Customer(Integer id, String name, String email, String password, Integer age, Gender gender) {
     }
 
     public Integer getId() {
@@ -202,7 +199,7 @@ public class Customer  implements  UserDetails{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(age, customer.age) && gender == customer.gender && Objects.equals(password, customer.password)/* && Objects.equals(profileImageId, customer.profileImageId)*/;
+        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(age, customer.age) && gender == customer.gender && Objects.equals(password, customer.password) /*&& Objects.equals(profileImageId, customer.profileImageId)*/;
     }
 
     @Override
