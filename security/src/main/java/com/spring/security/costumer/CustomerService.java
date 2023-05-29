@@ -79,7 +79,7 @@ public class CustomerService {
 
     public  void  updateCustomer(
             Integer customerId,
-            CustomerUpdateRequest updateRequest
+            CustumerUpdateRequest updateRequest
     ){
         Customer customer = customerDao.getReferenceById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException(

@@ -1,5 +1,6 @@
 package com.spring.security.costumer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @Repository("jpa")
 public class CustomerJPADataAccessService implements CustomerDao {
 
+    @Autowired
     private final CustomerRepository customerRepository;
 
     public CustomerJPADataAccessService(CustomerRepository customerRepository) {
@@ -31,6 +33,11 @@ public class CustomerJPADataAccessService implements CustomerDao {
     @Override
     public Optional<Customer> selectCustomerById(Integer id) {
         return customerRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Customer> getReferenceById(Integer customerId) {
+        return Optional.empty();
     }
 
     @Override
