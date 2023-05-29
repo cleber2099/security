@@ -1,7 +1,6 @@
 package com.spring.security.costumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,4 +36,12 @@ public class CustomerController {
                 //.header(HttpHeaders.AUTHORIZATION, jwtToken)
                 .build();
     }
+    @PutMapping("{customerId}")
+    public void updateCustomer(
+            @PathVariable("customerId") Integer customerId,
+            @RequestBody CustomerUpdateRequest updateRequest) {
+        customerService.updateCustomer(customerId, updateRequest);
+    }
+
+
 }

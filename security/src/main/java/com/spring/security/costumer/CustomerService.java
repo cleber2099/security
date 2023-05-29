@@ -1,6 +1,7 @@
 package com.spring.security.costumer;
 
 import com.spring.security.exception.DuplicateResourceException;
+import com.spring.security.exception.RequestValidationException;
 import com.spring.security.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +18,6 @@ public class CustomerService {
     @Autowired
     private final CustomerDTOMapper customerDTOMapper;
     @Autowired
-
     private final PasswordEncoder passwordEncoder;
 
 
@@ -77,6 +77,42 @@ public class CustomerService {
         customerDao.deleteCustomerById(customerId);
     }
 
+    public  void  updateCustomer(
+            Integer customerId,
+            CustomerUpdateRequest updateRequest
+    ){
+        Customer customer = customerDao.getReferenceById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "customer with id [%s] not found".formatted(customerId)
+                ));
+        boolean changes = false;
+
+        if (updateRequest.name() != null && !updateRequest.name().equals(customer.getName())) {
+            customer.setName(updateRequest.name());
+            changes = true;
+        }
+
+        if (updateRequest.age() != null && !updateRequest.age().equals(customer.getAge())) {
+            customer.setAge(updateRequest.age());
+            changes = true;
+        }
+
+        if (updateRequest.email() != null && !updateRequest.email().equals(customer.getEmail())) {
+            if (customerDao.existsCustomerWithEmail(updateRequest.email())) {
+                throw new DuplicateResourceException(
+                        "email already taken"
+                );
+            }
+            customer.setEmail(updateRequest.email());
+            changes = true;
+        }
+
+        if (!changes) {
+            throw new RequestValidationException("no data changes found");
+        }
+
+        customerDao.updateCustomer(customer);
+    }
 
 
 
