@@ -63,6 +63,22 @@ public class CustomerService {
         customerDao.insertCustomer(customer);
     }
 
+    // verifica se customer existe por id
+    private void checkIfCustomerExistsOrThrow(Integer customerId) {
+        if (!customerDao.existsCustomerById(customerId)) {
+            throw new ResourceNotFoundException(
+                    "customer with id [%s] not found".formatted(customerId)
+            );
+        }
+    }
+    // delete  custumer
+    public void deleteCustomerById(Integer customerId) {
+        checkIfCustomerExistsOrThrow(customerId);
+        customerDao.deleteCustomerById(customerId);
+    }
+
+
+
 
 
 }
